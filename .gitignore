@@ -1,0 +1,51 @@
+ //Arquivo que faz com que o git nao suba arquivos pesados (node_modules) e afins
+
+# --- Python (Backend) ---
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv
+env/
+venv/
+ENV/
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+
+# --- Node/React (Frontend) ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp/
+.pnp.js
+coverage/
+build/
+.next/
+out/
+build/
+
+# --- Banco de Dados e Vetores ---
+# Não queremos subir o banco de dados local para o GitHub
+*.db
+*.sqlite3
+chroma_db/
+faiss_index/
+pickle_files/
+
+# --- IDEs e Sistema ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# --- Arquivos de Ambiente (MUITO IMPORTANTE) ---
+# Nunca suba suas chaves da OpenAI ou senhas de banco
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
