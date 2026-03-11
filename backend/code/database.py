@@ -21,7 +21,7 @@ def get_connection():
 
 def create_table():
     #criar tabela caso não tenha 
-    commands=(
+    command=(
         """
         CREATE TABLE IF NOT EXISTS extract_dados( 
             id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,          --gerador de id automatico
@@ -31,50 +31,33 @@ def create_table():
             db_json_tables JSONB,                                         --tabelas em json
             date_extract TIMESTAMP DEFAULT CURRENT_TIMESTAMP              --data automatica
         )
-        """,
+        """
     )
     conn = None
     try:
-        conn = get_connection()
-        cur = conn.cursor()
-
-        for command in commands:
-            cur.execute(command)
-
-        conn.commit() #sobe as alteracoes 
-        cur.close() #fecha o cusor
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(command)
+                conn.commit()
         print("Tabelas criadas no banco de dados")
 
     except Exception as e:
         print(f"Erro ao criar as tabelas no banco {e}")
 
-    finally:
-        if conn is not None:
-            conn.close() #fecha a base de dados
-
-def insert_page_data(arquivo_name, number_page, db_text, tabelas_json):
-    #inserir dados da pagina no db
-
+def insert_date(arquivo_name, number_page, text, tables):
     query = """
     INSERT INTO extract_dados(name_arquivo, page_number, db_text, db_json_tables)
-    VALUES (%s %s %s %s)
-            """
-    conn = None
+    VALUES (%s, %s, %s, %s)
+    """
     try:
-        conn = get_connection()
-        cur = conn.cursor()
-
-        cur.execute(query(arquivo_name, number_page, db_text, json.dumbs(tabelas_json)))
-
-        conn.commit()
-        cur.close
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                cleanTables = json.dumps(tables)
+                cur.execute(query,(arquivo_name, number_page, text, cleanTables))
+                conn.commit()
 
     except Exception as e:
-        print(f"Erro ao inserir dados da pagina {number_page}: no banco {e}")
-
-    finally:
-        if conn:
-            conn.close()
+        print(f"Erro ao inserir pagina {number_page}: no banco de dados {e}")
 
 if __name__ == "__main__": 
     create_table()

@@ -1,9 +1,11 @@
 import pdfplumber
 import os
 import json
+from database import insert_date
 
 print("Versão do pdfplumber:", pdfplumber.__version__) #validacao 
 path = r"backend\code\input\PPCBCC2019.pdf"
+filename = os.path.basename(path)
 
 
 def clearTable(rawTables):
@@ -36,12 +38,17 @@ def extract_Dados(path):
                 "texto": textPage,
                 "tables": cleanTables
                 }
+            insert_date(filename, i+1, textPage, cleanTables)
+
         pathJson = r"backend\code\output"
         os.makedirs(pathJson, exist_ok=True)
         pathJson = os.path.join(pathJson, "dados.json")
         with open(pathJson, 'w', encoding='utf-8') as f:
             json.dump(splinedData, f, indent=4, ensure_ascii=False)
     return splinedData
+
+
+
 
 result = extract_Dados(path)
 print("Extracao concluída com sucesso! Verifique a pasta output.")
