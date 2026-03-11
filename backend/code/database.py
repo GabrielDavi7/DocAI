@@ -10,11 +10,11 @@ load_dotenv()
 def get_connection():
     #para puxar os dados do .env
     return psycopg2.connect(
-        name_db = os.getenv("DB_NAME"),
+        dbname = os.getenv("DB_NAME"),
         user = os.getenv("DB_USER"),
         password = os.getenv("DB_PASS"),
-        host_db = os.getenv("DB_HOST"),
-        port_db = os.getenv("DB_PORT")
+        host = os.getenv("DB_HOST"),
+        port = os.getenv("DB_PORT")
     )
 
 def create_Table():
@@ -29,7 +29,7 @@ def create_Table():
             db_json_tables JSONB,                                         #tabelas em json
             date_extract TIMESTAMP DEFAULT CURRENT_TIMESTAMP              #data automatica
         )
-        """
+        """,
     )
     conn = None
     try:
@@ -44,7 +44,7 @@ def create_Table():
         print("Tabelas criadas no banco de dados")
 
     except Exception as e:
-        print("Erro ao criar as tabelas no banco")
+        print("Erro ao criar as tabelas no banco {e}")
 
     finally:
         if conn is not None:
