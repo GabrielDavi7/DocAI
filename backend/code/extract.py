@@ -24,7 +24,7 @@ def clearTable(rawTables):
     return tabelas_limpas
 
 
-def extractDados(path):
+def extract_Dados(path):
     splinedData = {}#guardar os textos extraidos
     with pdfplumber.open(path) as pdf:
         #print(len(pdf.pages))
@@ -43,5 +43,5 @@ def extractDados(path):
             json.dump(splinedData, f, indent=4, ensure_ascii=False)
     return splinedData
 
-result = extractDados(path)
+result = extract_Dados(path)
 print("Extracao concluída com sucesso! Verifique a pasta output.")
