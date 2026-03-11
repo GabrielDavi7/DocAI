@@ -1,28 +1,28 @@
-# DocAI
+# 🤖 DocAI- Módulo de Extração e Armazenamento
 
-Gerenciamento e análise de documentos. Através da implementação de uma arquitetura RAG, o sistema permite que usuários façam upload de arquivos PDF e interajam com o conteúdo através de uma interface de chat, obtendo respostas contextualizadas.
+Este módulo é responsável por processar documentos acadêmicos (PDFs), extrair seus textos e tabelas, aplicar limpeza de dados e armazenar as informações estruturadas em um banco de dados relacional para alimentar o sistema RAG.
 
 ## 🛠️ Funcionalidades Atuais
 
-### 📄 Módulo de Extração (Backend)
-O sistema conta com um extrator desenvolvido em **Python**, capaz de processar documentos PDF e estruturar os dados para o Chatbot.
-
-- **Extração de Texto:** Recuperação integral do conteúdo textual por página.
-- **Processamento de Tabelas:** Identificação e extração de tabelas.
+- **Extração de Texto e Tabelas:** Recuperação integral do conteúdo por página utilizando `pdfplumber`.
 - **Sanitização de Dados (Data Cleaning):** - Remoção automática de valores nulos (`None`).
-  - Limpeza de quebras de linha e espaços excedentes.
-  - Formatação de células para compatibilidade com sistemas de IA.
-- **Saída Estruturada:** Geração de arquivos JSON organizados por página, facilitando a futura indexação em bancos de dados.
+  - Limpeza de quebras de linha e espaços excedentes nas células das tabelas.
+- **Integração com PostgreSQL:** - Criação automatizada de tabelas via script.
+  - Armazenamento de textos longos (`TEXT`) e tabelas estruturadas nativamente como `JSONB`.
+- **Segurança:** Uso de variáveis de ambiente (`.env`) para proteção das credenciais do banco de dados.
 
-## 🚀 Tecnologias Utilizadas no Módulo
-* **Python 3.10+**
-* **pdfplumber:** Para extração de coordenadas de texto e tabelas.
-* **JSON/OS:** Para manipulação de arquivos e diretórios de saída.
+## 🚀 Tecnologias Utilizadas
+* **Python**
+* **pdfplumber:** Extração de coordenadas de texto e tabelas de PDFs.
+* **PostgreSQL & psycopg2:** Banco de dados e driver de conexão.
+* **python-dotenv:** Gerenciamento de variáveis de ambiente.
 
-## 📂 Estrutura de Pastas (Atualizada)
+## 📂 Estrutura de Pastas
 ```text
 backend/
 └── code/
-    ├── extract.py      # Script principal de extração e limpeza
-    ├── input/          # PDFs para processamento (ignorado no git)
-    └── output/         # JSONs gerados após a extração
+    ├── extract.py      # Script principal de extração e envio para o banco
+    ├── database.py     # Setup das tabelas e funções de inserção (SQL)
+    ├── .env            # Credenciais do banco (Não versionado)
+    ├── input/          # Diretório de PDFs para processamento
+    └── output/         # JSONs de backup gerados após a extração
