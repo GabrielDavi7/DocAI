@@ -1,6 +1,6 @@
 # 🤖 DocAI- Módulo de Extração e Armazenamento
 
-Este módulo é responsável por processar documentos acadêmicos (PDFs), extrair seus textos e tabelas, aplicar limpeza de dados e armazenar as informações estruturadas em um banco de dados relacional para alimentar o sistema RAG.
+Este módulo é responsável por processar documentos (PDFs), extrair seus textos e tabelas, aplicar limpeza de dados e armazenar as informações estruturadas em um banco de dados relacional para alimentar o sistema RAG.
 
 ## 🛠️ Funcionalidades Atuais
 
